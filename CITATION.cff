@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use Scraping Eagle, please cite it as below."
+type: software
+title: "Scraping Eagle"
+abstract: >-
+  Scraping Eagle is an open-source web scraping CLI and Claude Code skill. One command, `scrape URL`,
+  fetches any web page, escalates automatically from a fast HTTP request to a stealth browser when a
+  site blocks bots, and returns clean Markdown, JSON or CSV for AI agents and developers.
+authors:
+  - name: "dshakers"
+    website: "https://github.com/dshakers"
+repository-code: "https://github.com/dshakers/scraping-eagle"
+url: "https://github.com/dshakers/scraping-eagle"
+license: MIT
+version: 1.0.0
+date-released: "2026-10-02"
+keywords:
+  - web scraping
+  - web crawler
+  - Claude Code skill
+  - AI agents
+  - Cloudflare bypass
+  - data extraction
+  - HTML to Markdown
+  - RAG

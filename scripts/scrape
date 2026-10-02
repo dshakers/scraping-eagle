@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Scraping Eagle · launcher. Runs the CLI with the Python of the isolated environment (~/.scraping-eagle/venv).
+set -euo pipefail
+
+SELF="${BASH_SOURCE[0]}"
+while [ -L "$SELF" ]; do
+  DIR="$(cd -P "$(dirname "$SELF")" && pwd)"
+  SELF="$(readlink "$SELF")"
+  [[ "$SELF" != /* ]] && SELF="$DIR/$SELF"
+done
+DIR="$(cd -P "$(dirname "$SELF")" && pwd)"
+
+HOME_DIR="${SCRAPING_EAGLE_HOME:-$HOME/.scraping-eagle}"
+PY="$HOME_DIR/venv/bin/python"
+
+if [ "${1:-}" = "setup" ]; then
+  shift
+  exec bash "$DIR/setup.sh" "$@"
+fi
+
+if [ ! -x "$PY" ]; then
+  if [ "${1:-}" = "doctor" ] && command -v python3 >/dev/null 2>&1; then
+    exec python3 "$DIR/scrape_cli.py" "$@"
+  fi
+  echo "[scrape] Engine not installed. Run once: bash \"$DIR/setup.sh\"  (or: scrape setup)" >&2
+  exit 3
+fi
+
+# `scrape py script.py` runs your own code with the engine's Python (all scraping libraries available).
+if [ "${1:-}" = "py" ]; then
+  shift
+  exec "$PY" "$@"
+fi
+
+exec "$PY" "$DIR/scrape_cli.py" "$@"
